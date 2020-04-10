@@ -1,0 +1,2 @@
+#!/bin/sh
+/root/download_urls.sh $DOWNLOAD_URLS_DAILY

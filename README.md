@@ -58,7 +58,7 @@ DOCKER PARAMETERS:
 | `-e DOWNLOADER="curl"`  | Enter either `curl` or `wget` to set the download command. |
 | `-e CURL_OPTIONS="--compressed"`  | Include these options when executing the `curl` command (`-O` will always be included). |
 | `-e WGET_OPTIONS="--content-disposition --backups=1"`  | Include these options when executing the `wget` command. |
-| `-e WGET_DELETE_BACKUP_1=false`  | When using `wget`, delete the `*.1` backup files when done (Handle with care; only use when `--backups=1` is active. See **Notes** below). |
+| `-e WGET_DELETE_BACKUP_1=false`  | When using `wget`, delete `*.1` backup files when done (Handle with care; only use when `--backups=1` is active. See **Notes** below). |
 | `-e DEBUG=false` | Set debug logging (when `true`, prints the download commands instead of executing them). |
 | `-v /path/to/downloads/folder:/download` | Path to downloads folder on host machine. |
 

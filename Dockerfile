@@ -1,6 +1,6 @@
 FROM alpine:3
 
-RUN apk add --no-cache bash curl
+RUN apk add --no-cache bash curl wget
 
 SHELL ["/bin/bash", "-c"]
 
@@ -9,7 +9,11 @@ WORKDIR /root
 VOLUME /download
 
 ENV DEBUG="false"
-ENV CURL_OPTIONS="-J"
+ENV CURL_OPTIONS="--compressed"
+ENV WGET_OPTIONS="--content-disposition --backups=1"
+ENV WGET_DELETE_BACKUP_1="false"
+
+ENV DOWNLOADER="curl"
 
 ENV PUID=1000
 ENV PGID=1000

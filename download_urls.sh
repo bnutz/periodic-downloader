@@ -2,27 +2,47 @@
 
 DOWNLOAD_DIR="/download"
 
-CURL_CMD=(curl)
-if [[ ! -z "$CURL_OPTIONS" ]]; then
-    CURL_CMD+=($CURL_OPTIONS)
+if [[ "$DOWNLOADER" != "wget" ]]; then
+    DOWNLOAD_CMD=(curl)
+    if [[ ! -z "$CURL_OPTIONS" ]]; then
+        DOWNLOAD_CMD+=($CURL_OPTIONS)
+    fi
+    DOWNLOAD_CMD+=(-O)
+else
+    DOWNLOAD_CMD=(wget)
+    if [[ ! -z "$WGET_OPTIONS" ]]; then
+        DOWNLOAD_CMD+=($WGET_OPTIONS)
+    fi
 fi
-CURL_CMD+=(-O)
 
 if [[ ! -z "$1" ]]; then
-    cd $DOWNLOAD_DIR
+    if [[ "$DEBUG" != "true" ]]; then
+        cd $DOWNLOAD_DIR
+    else
+        echo "==== $(date +%Y-%m-%d" "%H:%M:%S) ===="
+        echo "cd $DOWNLOAD_DIR"
+    fi
 
     IFS=';' read -ra ADDR <<< "$1"
     for i in "${ADDR[@]}"; do
         if [[ "$DEBUG" != "true" ]]; then
-            ${CURL_CMD[@]} $i
+            ${DOWNLOAD_CMD[@]} $i
         else
-            echo "==== $(date +%Y-%m-%d" "%H:%M:%S) ===="
-            echo "cd $DOWNLOAD_DIR"
-            echo "${CURL_CMD[@]} $i"
-            echo "chown -R $PUID:$PGID $DOWNLOAD_DIR/*"
-            echo
+            echo "${DOWNLOAD_CMD[@]} $i"
         fi
     done
-    
-    chown -R $PUID:$PGID $DOWNLOAD_DIR/*
+
+    if [[ "$DEBUG" != "true" ]]; then
+        if [[ "$DOWNLOADER" == "wget" && "$WGET_DELETE_BACKUP_1" == "true" ]]; then
+            rm ./*.1
+        fi
+        
+        chown -R $PUID:$PGID ./*
+    else
+        if [[ "$DOWNLOADER" == "wget" && "$WGET_DELETE_BACKUP_1" == "true" ]]; then
+            echo "rm ./*.1"
+        fi
+        echo "chown -R $PUID:$PGID ./*"
+        echo
+    fi
 fi

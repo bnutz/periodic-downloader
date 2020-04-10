@@ -5,7 +5,7 @@ DESCRIPTION:
 -----------
 A simple Docker container to download fixed links to a target folder at given intervals.
 
-Links are downloaded via the syntax: `curl -O {link}`
+Links are downloaded via the syntax: `curl {options} -O {link}`
 
 Multiple links supported (separate each link with a semi-colon)
 
@@ -35,6 +35,7 @@ docker run \
     -e PUID=1000 \
     -e PGID=1000 \
     -e DOWNLOAD_URLS_WEEKLY="http://server1/backup1.zip;http://server2/backup2.zip" \
+    -e CURL_OPTIONS="--remote-header-name --verbose" \
     -e DEBUG=false \
     -v <path to downloads folder>:/download \
     bnutz/periodic-downloader
@@ -52,6 +53,6 @@ DOCKER PARAMETERS:
 | `-e DOWNLOAD_URLS_DAILY=""`  | List of urls to download every day. |
 | `-e DOWNLOAD_URLS_WEEKLY=""`  | List of urls to download every week. |
 | `-e DOWNLOAD_URLS_MONTHLY=""`  | List of urls to download every month. |
-| `-e VERBOSE_CURL=false`  | Run `curl` in verbose mode (`-v`). |
+| `-e CURL_OPTIONS="-J"`  | Include these options when executing the `curl` command (`-O` will always be included). |
 | `-e DEBUG=false` | Set debug logging (when `true`, prints the commands instead of executing them). |
 | `-v /path/to/downloads/folder:/download` | Path to downloads folder on host machine. |

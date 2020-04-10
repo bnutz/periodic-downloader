@@ -3,8 +3,8 @@
 DOWNLOAD_DIR="/download"
 
 CURL_CMD=(curl)
-if [ "$VERBOSE_CURL" == "true" ]; then
-    CURL_CMD+=(-v)
+if [[ ! -z "$CURL_OPTIONS" ]]; then
+    CURL_CMD+=($CURL_OPTIONS)
 fi
 CURL_CMD+=(-O)
 

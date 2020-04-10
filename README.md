@@ -5,7 +5,7 @@ DESCRIPTION:
 -----------
 A simple Docker container to download fixed links to a target folder at given intervals.
 
-Links are downloaded via the syntax: `curl -v -O {link}`
+Links are downloaded via the syntax: `curl -O {link}`
 
 Multiple links supported (separate each link with a semi-colon)
 
@@ -52,5 +52,6 @@ DOCKER PARAMETERS:
 | `-e DOWNLOAD_URLS_DAILY=""`  | List of urls to download every day. |
 | `-e DOWNLOAD_URLS_WEEKLY=""`  | List of urls to download every week. |
 | `-e DOWNLOAD_URLS_MONTHLY=""`  | List of urls to download every month. |
-| `-e DEBUG=false` | Set debug logging (when `true`, prints the commands to `/tmp/output.log` instead of executing them). |
+| `-e VERBOSE_CURL=false`  | Run `curl` in verbose mode (`-v`). |
+| `-e DEBUG=false` | Set debug logging (when `true`, prints the commands instead of executing them). |
 | `-v /path/to/downloads/folder:/download` | Path to downloads folder on host machine. |

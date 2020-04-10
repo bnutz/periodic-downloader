@@ -9,6 +9,7 @@ WORKDIR /root
 VOLUME /download
 
 ENV DEBUG="false"
+ENV VERBOSE_CURL="false"
 
 ENV PUID=1000
 ENV PGID=1000

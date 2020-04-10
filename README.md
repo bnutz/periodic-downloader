@@ -1,4 +1,4 @@
-# periodic-downloader
+# bnutz/periodic-downloader
 Periodically download urls to a target folder on a cron schedule
 
 DESCRIPTION:
@@ -21,7 +21,7 @@ bash-5.0# crontab -l
 0       5       1       *       *       run-parts /etc/periodic/monthly
 ```
 
-Handy if you just want to download at generic time frames, and not too fussed at exactly *when* the download happens.
+Handy if you just want to download at generic timeframes, and not too fussed at exactly *when* the download happens.
 
 If you need more control over timing, try this container instead: https://github.com/jsonfry/docker-curl-cron
 

@@ -66,14 +66,14 @@ NOTES:
 ------
 * Neither `curl` nor `wget` will overwrite an existing file by default:
   * `curl` will only overwrite when using the `-O, --remote-name` option... *except* [when `-J, --remote-header-name` is also active](https://curl.haxx.se/docs/manpage.html#-J).
-  * `wget` will also only overwrite when using the `‘-O filename, --output-document=filename`, *however* this option requires you to [specify a filename in advance](https://www.gnu.org/software/wget/manual/wget.html#Download-Options).
-* So for `curl`, as long as we avoid using the `-J` option; we can get the periodic backup behaviour.
-* However, if we do have a link that uses the `Content-Disposition` header and saves to a different filename (like if http://site.com/page?export saves to *filename.pdf*):
-  * Then our only option is to use `wget` with the following options:<p>`wget --content-disposition --backups=1 {link}`</p>
-    * `--content-disposition` will allow us to save as the desired filename.
-    * `--backups=1` if a file exists, `wget` will add `.1` to its filename before downloading the new file in its place (See the [man page](https://www.gnu.org/software/wget/manual/wget.html#Download-Options) for more info).
-  * This means when using the `--backups` option - there will be two files:
+  * `wget` will also only overwrite when using the `-O filename, --output-document=filename`, *however* this option requires you to [specify a filename in advance](https://www.gnu.org/software/wget/manual/wget.html#Download-Options).
+* So for `curl`, as long as we avoid using the `-J` option; we can get the periodic backup behaviour and only keep the most recent file.
+* If we do have a link that uses the `Content-Disposition` header and saves to a different filename (like if clicking on "ht<span>tp://si</span>te.<span>com/page?ex</span>port" saves to *filename.pdf*):
+  * Then we can use `wget` with the following options:<p>`wget --content-disposition --backups=1 {link}`</p>
+    * `--content-disposition` will allow us to save as the intended filename set by the server.
+    * `--backups=1` means if the file exists, `wget` will add `.1` to its filename before downloading the new file in its place (See the [man page](https://www.gnu.org/software/wget/manual/wget.html#Download-Options) for more info).
+  * When using the `--backups` option - there will be two files:
     * *filename.ext* - The latest version of the downloaded file
     * *filename.ext.1* - The previous version of the downloaded file
-  * If you don't want two copies of the file, then can set `WGET_DELETE_BACKUP_1=true` in the Docker container to delete the previous copy of the file after download is complete.
+  * If you don't want two copies of the file, then can set the environment variable `WGET_DELETE_BACKUP_1=true` to delete the previous copy of the file after download is complete.
     * **Be careful with this option** - all it does is run "`rm *.1`" in the download folder; it does **not** do any checking or verification.
